@@ -5,7 +5,7 @@ let SERVICE_UUID  = 'a8330e43-f6f4-4a7f-80ae-6b2915cc4569';
 let ALTITUDE_UUID = 'a8af30e7-5c8e-43bf-bb21-3c1343229260';
 let AZIMUTH_UUID  = 'ace1dd10-2e46-4100-a74a-cc77f13f1bab';
 
-let UpdatePeriod = 60000;
+let UpdatePeriod = 5;
 
 module.exports = function(homebridge) {
 	Accessory = homebridge.hap.Accessory;
@@ -89,5 +89,5 @@ SunPositionAccessory.prototype.updatePosition = function() {
 	this.service.setCharacteristic(AltitudeCharacteristic, altitude);
 	this.service.setCharacteristic(AzimuthCharacteristic, azimuth);
 
-	setTimeout(this.updatePosition.bind(this), UpdatePeriod);
+	setTimeout(this.updatePosition.bind(this), UpdatePeriod * 60 * 1000);
 }
