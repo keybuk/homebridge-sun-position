@@ -75,7 +75,7 @@ SunPositionAccessory.prototype.getServices = function() {
 
     this.updatePosition();
 
-    return [this.service];
+    return [this.informationService, this.service];
 }
 
 SunPositionAccessory.prototype.updatePosition = function() {
