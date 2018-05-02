@@ -4,7 +4,7 @@ var inherits = require('util').inherits,
 let ALTITUDE_UUID = 'a8af30e7-5c8e-43bf-bb21-3c1343229260';
 let AZIMUTH_UUID  = 'ace1dd10-2e46-4100-a74a-cc77f13f1bab';
 
-let UpdatePeriod = 5;
+let UpdatePeriod = 1;
 
 module.exports = function(homebridge) {
 	Accessory = homebridge.hap.Accessory;
