@@ -1,7 +1,6 @@
 var inherits = require('util').inherits,
 	suncalc = require('suncalc');
 
-let SERVICE_UUID  = 'a8330e43-f6f4-4a7f-80ae-6b2915cc4569';
 let ALTITUDE_UUID = 'a8af30e7-5c8e-43bf-bb21-3c1343229260';
 let AZIMUTH_UUID  = 'ace1dd10-2e46-4100-a74a-cc77f13f1bab';
 
@@ -69,7 +68,7 @@ SunPositionAccessory.prototype.getServices = function() {
 		.setCharacteristic(Characteristic.Model, "Sun Position")
 		.setCharacteristic(Characteristic.SerialNumber, "");
 
-    this.service = new Service("Sun Position", SERVICE_UUID);
+    this.service = new Service.LightSensor("Sun");
     this.service.addCharacteristic(AltitudeCharacteristic);
     this.service.addCharacteristic(AzimuthCharacteristic);
 
@@ -80,6 +79,29 @@ SunPositionAccessory.prototype.getServices = function() {
 
 SunPositionAccessory.prototype.updatePosition = function() {
 	var now = new Date();
+	var times = suncalc.getTimes(now, this.location.lat, this.location.long);
+
+	// Arbitrary lux values for times.
+	var lux = 0;
+	if (now >= times.sunrise && now <= times.sunriseEnd) {
+		lux = 400;
+	} else if (now > times.sunriseEnd && now <= times.goldenHourEnd) {
+		lux = 20000;
+	} else if (now >= times.goldenHour && times < times.sunsetStart) {
+		lux = 20000;
+	} else if (now >= times.sunsetStart && now <= times.sunset) {
+		lux = 400;
+	} else if (now > times.sunset && now <= times.night) {
+		lux = 40;
+	} else if (now >= times.nightEnd && now < times.sunrise) {
+		lux = 40;
+	} else if (now > times.goldenHourEnd && now < times.goldenHour) {
+		lux = 120000;
+	}
+
+	this.service.setCharacteristic(Characteristic.CurrentAmbientLightLevel, lux);
+
+
 	var position = suncalc.getPosition(now, this.location.lat, this.location.long);
 	var altitude = position.altitude * 180 / Math.PI;
 	var azimuth = (position.azimuth * 180 / Math.PI + 180) % 360;
