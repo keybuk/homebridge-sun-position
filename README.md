@@ -41,4 +41,4 @@ To use the Altitude and Azimuth characteristics, you will need an app such as Ma
 
 And you can create automations based on its position:
 
-![Automation](https://i.imgur.com/ZHUVaKQ.png)
+![Automation](https://i.imgur.com/ZHUVaKQ.png?)
