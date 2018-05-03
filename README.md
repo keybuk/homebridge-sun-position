@@ -38,7 +38,7 @@ A single "Sun" accessory is added to your home, represented as a Light Sensor; t
 To use the Altitude and Azimuth characteristics, you will need an app such as Matthias Hochgatterer's [Home - Smart Home Automation](https://itunes.apple.com/us/app/home-smart-home-automation/id995994352?mt=8) app. Using this app you can see the current position of the sun, and create automations based on it:
 
 ![Characteristics](https://i.imgur.com/lRAdM0S.png)
-![Automation](https://i.imgur.com/ZHUVaKQ.png)
+![Automation](https://i.imgur.com/ZHUVaKQ.png?)
 
 ## Usage
 
