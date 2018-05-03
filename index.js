@@ -4,7 +4,7 @@ var inherits = require('util').inherits,
 let ALTITUDE_UUID = 'a8af30e7-5c8e-43bf-bb21-3c1343229260';
 let AZIMUTH_UUID  = 'ace1dd10-2e46-4100-a74a-cc77f13f1bab';
 
-let UpdatePeriod = 1;
+let UpdatePeriod = 5;
 
 module.exports = function(homebridge) {
 	Accessory = homebridge.hap.Accessory;
@@ -54,6 +54,7 @@ function SunPositionAccessory(log, config) {
 		throw new Error("Missing or invalid location configuration");
 
 	this.location = config.location;
+	this.updatePeriod = config.updatePeriod || UpdatePeriod;
 }
 
 SunPositionAccessory.prototype.identify = function(callback) {
@@ -111,5 +112,5 @@ SunPositionAccessory.prototype.updatePosition = function() {
 	this.service.setCharacteristic(AltitudeCharacteristic, altitude);
 	this.service.setCharacteristic(AzimuthCharacteristic, azimuth);
 
-	setTimeout(this.updatePosition.bind(this), UpdatePeriod * 60 * 1000);
+	setTimeout(this.updatePosition.bind(this), this.updatePeriod * 60 * 1000);
 }
