@@ -67,7 +67,6 @@ SunPositionAccessory.prototype.getServices = function() {
 	this.informationService
 		.setCharacteristic(Characteristic.Manufacturer, "github.com keybuk")
 		.setCharacteristic(Characteristic.Model, "Sun Position")
-		.setCharacteristic(Characteristic.SerialNumber, "");
 
     this.service = new Service.LightSensor("Sun");
     this.service.addCharacteristic(AltitudeCharacteristic);
