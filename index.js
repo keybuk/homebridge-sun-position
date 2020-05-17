@@ -5,8 +5,8 @@ let ALTITUDE_UUID = 'a8af30e7-5c8e-43bf-bb21-3c1343229260';
 let AZIMUTH_UUID  = 'ace1dd10-2e46-4100-a74a-cc77f13f1bab';
 
 let UpdatePeriod = 5;
-let AltitudeStep = 10;
-let AzimuthStep = 1;
+let AltitudeStep = 0.1;
+let AzimuthStep = 0.1;
 
 module.exports = function(homebridge) {
 	Accessory = homebridge.hap.Accessory;
@@ -23,7 +23,7 @@ module.exports = function(homebridge) {
 	    	unit: Characteristic.Units.ARC_DEGREE,
 	    	minValue: -90,
 	    	maxValue: 90,
-	    	minStep: 0.1,
+	    	minStep: 1,
 	    	perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
 	    });
 		this.value = this.getDefaultValue();
@@ -38,7 +38,7 @@ module.exports = function(homebridge) {
 	    	unit: Characteristic.Units.ARC_DEGREE,
 	    	minValue: 0,
 	    	maxValue: 360,
-	    	minStep: 0.1,
+	    	minStep: 1,
 	    	perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
 	    });
 		this.value = this.getDefaultValue();
@@ -113,7 +113,7 @@ SunPositionAccessory.prototype.updatePosition = function() {
 	altitude = Math.round(altitude / this.altitudeStep) * this.altitudeStep;
 	azimuth = Math.round(azimuth / this.azimuthStep) * this.azimuthStep;
 
-	this.log("Sun is " + altitude + " high at " + azimuth);
+	//this.log("Sun is " + altitude + " high at " + azimuth);
 
 	this.service.setCharacteristic(AltitudeCharacteristic, altitude);
 	this.service.setCharacteristic(AzimuthCharacteristic, azimuth);
