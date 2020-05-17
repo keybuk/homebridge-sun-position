@@ -5,6 +5,8 @@ let ALTITUDE_UUID = 'a8af30e7-5c8e-43bf-bb21-3c1343229260';
 let AZIMUTH_UUID  = 'ace1dd10-2e46-4100-a74a-cc77f13f1bab';
 
 let UpdatePeriod = 5;
+let AltitudeStep = 10;
+let AzimuthStep = 1;
 
 module.exports = function(homebridge) {
 	Accessory = homebridge.hap.Accessory;
@@ -55,6 +57,8 @@ function SunPositionAccessory(log, config) {
 
 	this.location = config.location;
 	this.updatePeriod = config.updatePeriod || UpdatePeriod;
+	this.altitudeStep = config.altitudeStep || AltitudeStep;
+	this.azimuthStep = config.azimuthStep || AzimuthStep;
 }
 
 SunPositionAccessory.prototype.identify = function(callback) {
@@ -105,6 +109,9 @@ SunPositionAccessory.prototype.updatePosition = function() {
 	var position = suncalc.getPosition(now, this.location.lat, this.location.long);
 	var altitude = position.altitude * 180 / Math.PI;
 	var azimuth = (position.azimuth * 180 / Math.PI + 180) % 360;
+
+	altitude = Math.round(altitude / this.altitudeStep) * this.altitudeStep;
+	azimuth = Math.round(azimuth / this.azimuthStep) * this.azimuthStep;
 
 	this.log("Sun is " + altitude + " high at " + azimuth);
 
