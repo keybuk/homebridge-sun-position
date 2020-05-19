@@ -23,7 +23,7 @@ module.exports = function(homebridge) {
 	    	unit: Characteristic.Units.ARC_DEGREE,
 	    	minValue: -90,
 	    	maxValue: 90,
-	    	minStep: 1,
+	    	minStep: AltitudeStep,
 	    	perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
 	    });
 		this.value = this.getDefaultValue();
@@ -38,7 +38,7 @@ module.exports = function(homebridge) {
 	    	unit: Characteristic.Units.ARC_DEGREE,
 	    	minValue: 0,
 	    	maxValue: 360,
-	    	minStep: 1,
+	    	minStep: AzimuthStep,
 	    	perms: [Characteristic.Perms.READ, Characteristic.Perms.NOTIFY]
 	    });
 		this.value = this.getDefaultValue();
@@ -74,7 +74,10 @@ SunPositionAccessory.prototype.getServices = function() {
 
     this.service = new Service.LightSensor("Sun");
     this.service.addCharacteristic(AltitudeCharacteristic);
-    this.service.addCharacteristic(AzimuthCharacteristic);
+	this.service.addCharacteristic(AzimuthCharacteristic);
+	
+	this.service.getCharacteristic(AltitudeCharacteristic).props.minStep = this.altitudeStep;
+	this.service.getCharacteristic(AzimuthCharacteristic).props.minStep = this.azimuthStep;
 
     this.updatePosition();
 
