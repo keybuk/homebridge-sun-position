@@ -82,7 +82,7 @@ SunPositionAccessory.prototype.updatePosition = function() {
 	var times = suncalc.getTimes(now, this.location.lat, this.location.long);
 
 	// Arbitrary lux values for times.
-	var lux = 0;
+	var lux = 0.0001;
 	if (now >= times.sunrise && now <= times.sunriseEnd) {
 		lux = 400;
 	} else if (now > times.sunriseEnd && now <= times.goldenHourEnd) {
@@ -96,7 +96,7 @@ SunPositionAccessory.prototype.updatePosition = function() {
 	} else if (now >= times.nightEnd && now < times.sunrise) {
 		lux = 40;
 	} else if (now > times.goldenHourEnd && now < times.goldenHour) {
-		lux = 120000;
+		lux = 100000;
 	}
 
 	this.service.setCharacteristic(Characteristic.CurrentAmbientLightLevel, lux);
